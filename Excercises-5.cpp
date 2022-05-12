@@ -9,9 +9,13 @@ struct Logger {
 };
 
 struct ConsoleLogger : Logger {
-  void log_transfer(long from, long to, double amount) override {
-    printf("[cons] %ld -> %ld: %f\n", from, to, amount);
-  }
+    ConsoleLogger(const char* logger_name) 
+    : logger_name { logger_name } {}
+
+    void log_transfer(long from, long to, double amount) override {
+        printf("[%s] %ld -> %ld: %f\n", logger_name, from, to, amount);
+    }
+    const char* logger_name;
 };
 
 struct FileLogger : Logger {
@@ -158,7 +162,7 @@ int main() {
     db.print_db();
 
     printf("Testing Bank");
-    ConsoleLogger console_logger;
+    ConsoleLogger console_logger("a logger");
     Bank bank;
     bank.set_logger(&console_logger);
     bank.set_account_db(&db);
