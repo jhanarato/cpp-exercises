@@ -29,16 +29,39 @@ int mode(const int* values, size_t length) {
         }
     }
 
-    // Testing: print the values and their tallies.
-    for(auto i = 0; i < length; i++) {
-        printf("Value: %d, Tally: %d\n", tally_values[i], tally_counts[i]);
+    // Find the largest tally
+    auto largest = 0;
+    auto mode_found = 0;
+    for(auto i = 0; i < number_of_tallies; i++) {
+        if(tally_counts[i] > largest) {
+            largest = tally_counts[i];
+            mode_found = tally_values[i];
+        }
     }
 
-    
-    return 0;
+    // Check it only appears once. 
+    auto largest_appears = 0;
+
+    for(auto i = 0; i < number_of_tallies; i++) {
+        if(tally_counts[i] == largest) {
+            largest_appears++;
+        }
+    }
+
+    // We're multi-modal. This is an error.
+    if(largest_appears > 1) return 0;
+
+    // Woohoo! Got a single mode.
+    return mode_found;
 }
 
 int main() {
-    int values[] = { 1, 2, 2, 4, 3, 4, 4 };
-    mode(values, 7);
+    int values[] = { 1, 2, 2, 1, 4, 3, 4, 4 };
+    int result = mode(values, 8);
+    if(result) {
+        printf("Mode found: %d\n", result);
+    } else {
+        printf("No mode found\n");
+    }
+    
 }
