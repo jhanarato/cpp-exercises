@@ -1,6 +1,7 @@
 #include <cstdio>
 
-int mode(const int* values, size_t length) {
+template <typename T>
+T mode(const T* values, size_t length) {
     for(auto value_idx = 0; value_idx < length; value_idx++) {
         if(values[value_idx] == 0) return 0; // Error: no zero value allowed.
     }
@@ -58,12 +59,13 @@ int mode(const int* values, size_t length) {
 }
 
 int main() {
-    int values[] = { 1, 2, 2, 1, 4, 3, 4, 4 };
-    int result = mode(values, 8);
+    long values[] = { 1, 2, 2, 1, 4, 3, 4, 4 };
+    auto result = mode(values, 8);
     if(result) {
-        printf("Mode found: %d\n", result);
+        printf("Mode found: %ld\n", result);
     } else {
         printf("No mode found\n");
     }
-    
+
+    return 0;
 }
